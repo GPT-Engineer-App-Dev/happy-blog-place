@@ -1,8 +1,20 @@
 import { useState } from "react";
-import { Container, Text, VStack, Heading, Box, Image, Link, Button } from "@chakra-ui/react";
-import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
+import { Container, Text, VStack, Heading, Box, Image, Link, Button, useColorMode, IconButton, useColorModeValue } from "@chakra-ui/react";
+import { FaTwitter, FaGithub, FaLinkedin, FaMoon, FaSun } from "react-icons/fa";
 import AddBlogPost from "../components/AddBlogPost";
 import BlogPost from "../components/BlogPost";
+
+const ColorModeToggle = () => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  return (
+    <IconButton
+      icon={colorMode === "light" ? <FaMoon /> : <FaSun />}
+      onClick={toggleColorMode}
+      variant="ghost"
+      aria-label="Toggle color mode"
+    />
+  );
+};
 
 const Index = () => {
   const [blogPosts, setBlogPosts] = useState([]);
@@ -12,9 +24,12 @@ const Index = () => {
   };
 
   return (
-    <Container maxW="container.md" py={8}>
+    <Container maxW="container.md" py={8} bg={useColorModeValue("white", "gray.800")} color={useColorModeValue("black", "white")}>
+      <Box position="absolute" top={4} right={4}>
+        <ColorModeToggle />
+      </Box>
       <VStack spacing={8} align="stretch">
-        <Box textAlign="center">
+        <Box textAlign="center" borderWidth={1} borderRadius="lg" p={4} mb={4} bg={useColorModeValue("white", "gray.700")}>
           <Heading as="h1" size="2xl" mb={4}>Welcome to My Blog</Heading>
           <Box boxSize="150px" margin="auto">
             <Image src="/images/profile.jpg" alt="Profile Picture" borderRadius="full" />
