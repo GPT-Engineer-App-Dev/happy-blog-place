@@ -1,27 +1,46 @@
-import { Container, Text, VStack, Heading, Box, Image, Link } from "@chakra-ui/react";
+import { useState } from "react";
+import { Container, Text, VStack, Heading, Box, Image, Link, Button } from "@chakra-ui/react";
 import { FaTwitter, FaGithub, FaLinkedin } from "react-icons/fa";
+import AddBlogPost from "../components/AddBlogPost";
+import BlogPost from "../components/BlogPost";
 
 const Index = () => {
+  const [blogPosts, setBlogPosts] = useState([]);
+
+  const handleAddPost = (newPost) => {
+    setBlogPosts([newPost, ...blogPosts]);
+  };
+
   return (
-    <Container centerContent maxW="container.md" height="100vh" display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <VStack spacing={4}>
-        <Heading as="h1" size="2xl">Welcome to My Blog</Heading>
-        <Box boxSize="150px">
-          <Image src="/images/profile.jpg" alt="Profile Picture" borderRadius="full" />
+    <Container maxW="container.md" py={8}>
+      <VStack spacing={8} align="stretch">
+        <Box textAlign="center">
+          <Heading as="h1" size="2xl" mb={4}>Welcome to My Blog</Heading>
+          <Box boxSize="150px" margin="auto">
+            <Image src="/images/profile.jpg" alt="Profile Picture" borderRadius="full" />
+          </Box>
+          <Text fontSize="lg" mt={4}>
+            Hi, I'm [Your Name], a passionate blogger who loves to share thoughts on technology, programming, and life. Stay tuned for my latest posts!
+          </Text>
+          <Box mt={4}>
+            <Link href="https://twitter.com" isExternal mx={2}>
+              <FaTwitter size="24px" />
+            </Link>
+            <Link href="https://github.com" isExternal mx={2}>
+              <FaGithub size="24px" />
+            </Link>
+            <Link href="https://linkedin.com" isExternal mx={2}>
+              <FaLinkedin size="24px" />
+            </Link>
+          </Box>
         </Box>
-        <Text fontSize="lg" textAlign="center">
-          Hi, I'm [Your Name], a passionate blogger who loves to share thoughts on technology, programming, and life. Stay tuned for my latest posts!
-        </Text>
-        <VStack spacing={2}>
-          <Link href="https://twitter.com" isExternal>
-            <FaTwitter size="24px" />
-          </Link>
-          <Link href="https://github.com" isExternal>
-            <FaGithub size="24px" />
-          </Link>
-          <Link href="https://linkedin.com" isExternal>
-            <FaLinkedin size="24px" />
-          </Link>
+
+        <AddBlogPost onAddPost={handleAddPost} />
+
+        <VStack spacing={4} align="stretch">
+          {blogPosts.map((post) => (
+            <BlogPost key={post.id} {...post} />
+          ))}
         </VStack>
       </VStack>
     </Container>
