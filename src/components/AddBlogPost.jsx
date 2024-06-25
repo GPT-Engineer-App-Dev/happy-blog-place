@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControl, FormLabel, Input, Textarea, VStack, useToast } from '@chakra-ui/react';
+import { Box, Button, FormControl, FormLabel, Input, Textarea, VStack, useToast, useColorModeValue } from '@chakra-ui/react';
 
 const AddBlogPost = ({ onAddPost }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const toast = useToast();
+  const inputBgColor = useColorModeValue("white", "gray.700");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,6 +46,7 @@ const AddBlogPost = ({ onAddPost }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter blog post title"
+            bg={inputBgColor}
           />
         </FormControl>
         <FormControl isRequired>
@@ -54,6 +56,7 @@ const AddBlogPost = ({ onAddPost }) => {
             onChange={(e) => setContent(e.target.value)}
             placeholder="Enter blog post content"
             size="lg"
+            bg={inputBgColor}
             resize="vertical"
           />
         </FormControl>
